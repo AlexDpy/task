@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Infrastructure\Storage;
+namespace App\Infrastructure\ExchangeRatesApi;
 
 use App\Domain\Model\Currency;
 use App\Domain\Model\ExchangeRate;
 use App\Domain\Repository\ExchangeRateReader;
 
-class SqlExchangeRateReader implements ExchangeRateReader
+class ExchangeRatesApiClient implements ExchangeRateReader
 {
     public function get(Currency $baseCurrency, Currency $currency, \DateTimeInterface $date): ExchangeRate
     {

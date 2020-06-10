@@ -1,12 +1,17 @@
 {
     "name": "root/task",
     "require": {
+        "ext-json": "^1.7",
+        "doctrine/annotations": "^1.10",
+        "laminas/laminas-xmlrpc": "^2.9",
+        "symfony/dotenv": "^5.1",
         "symfony/flex": "^1.7",
         "symfony/framework-bundle": "^5.1",
-        "symfony/dotenv": "^5.1",
-        "symfony/yaml": "^5.1",
-        "laminas/laminas-xmlrpc": "^2.9",
-        "ext-json": "^1.7"
+        "symfony/yaml": "^5.1"
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.19",
+        "symfony/test-pack": "^1.0"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -31,9 +36,5 @@
         "platform": {
             "php": "7.2.31"
         }
-    },
-    "require-dev": {
-        "symfony/maker-bundle": "^1.19",
-        "doctrine/annotations": "^1.10"
     }
 }
