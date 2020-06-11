@@ -4,7 +4,7 @@ namespace App\Domain\Model;
 
 class Currency
 {
-    private const SUPPORTED_SYMBOLS = [
+    public const SUPPORTED_SYMBOLS = [
         'CAD',
         'HKD',
         'ISK',

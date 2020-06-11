@@ -23,6 +23,26 @@ class ExchangeRatesApiClient implements ExchangeRateReader
 
     public function get(Currency $baseCurrency, Currency $currency, \DateTimeInterface $date): ExchangeRate
     {
+        $rates = $this->getAll($baseCurrency, $date)['rates'];
+
+        // TODO check exists $content[$currency->getSymbol()]
+
+        return new ExchangeRate(
+            $baseCurrency,
+            $currency,
+            $date,
+            $rates[$currency->getSymbol()]
+        );
+    }
+
+    /**
+     * @param Currency $baseCurrency
+     * @param \DateTimeInterface $date
+     *
+     * @return array The result from exchangeratesapi.io
+     */
+    public function getAll(Currency $baseCurrency, \DateTimeInterface $date): array
+    {
         $url = sprintf(
             'https://api.exchangeratesapi.io/%s?base=%s',
             $date->format('Y-m-d'),
@@ -38,14 +58,7 @@ class ExchangeRatesApiClient implements ExchangeRateReader
                 throw new ExchangeRateNotFoundException(sprintf('Exchange rate for date %s has not been found on exchangeratesapi.io', $date->format('Y-m-d')));
             }
 
-            // TODO check exists $content[$currency->getSymbol()]
-
-            return new ExchangeRate(
-                $baseCurrency,
-                $currency,
-                $date,
-                $content['rates'][$currency->getSymbol()]
-            );
+            return $content;
         } catch (HttpExceptionInterface $e) {
             throw new ExchangeRateNotFoundException($e->getMessage(), $e->getCode(), $e);
         }
