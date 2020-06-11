@@ -32,3 +32,6 @@ services:
     App\Infrastructure\Storage\ExchangeRateStorageReader:
         bind:
             $connection: '@doctrine.dbal.default_connection'
+
+    Swarrot\SwarrotBundle\Broker\Publisher:
+        alias: swarrot.publisher

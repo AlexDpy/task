@@ -11,6 +11,14 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public function __construct($environment, $debug)
+    {
+        // @see https://www.php.net/manual/en/ini.core.php#ini.serialize-precision
+        ini_set('serialize_precision','-1');
+
+        parent::__construct($environment, $debug);
+    }
+
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $container->import('../config/{packages}/*.yaml');

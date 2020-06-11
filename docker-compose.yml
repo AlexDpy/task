@@ -60,6 +60,7 @@ services:
     hostname: rabbitmq.dockery
     volumes:
       - ./configs/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - ./configs/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
     ports:
       - "15671:15672"
       - "5671:5672"

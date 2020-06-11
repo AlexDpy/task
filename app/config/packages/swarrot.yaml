@@ -1,0 +1,13 @@
+swarrot:
+    provider: amqp_lib # pecl or amqp_lib (require php-amqplib/php-amqplib)
+#     default_connection: rabbitmq
+#     default_command: swarrot.command.base # Swarrot\SwarrotBundle\Command\SwarrotCommand
+#     logger: logger # logger or channel logger like monolog.logger.[my_channel]
+    connections:
+        rabbitmq:
+            url: "%env(RABBITMQ_DSN)%"
+    messages_types:
+        exchange_rate_has_changed:
+            connection: rabbitmq # use the default connection by default
+            exchange: exchange_rate.events
+
