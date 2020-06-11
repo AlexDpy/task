@@ -80,5 +80,33 @@ class ExchangeRatesApiClientTest extends TestCase
         // Act
         $this->SUT->get($baseCurrency, $currency, $date);
     }
+
+    /**
+     * @test
+     */
+    public function itThrowsANotFoundExceptionIfTheDateIsNotTheSame()
+    {
+        // Arrange
+        $baseCurrency = new Currency('EUR');
+        $currency = new Currency('USD');
+        $date = new \DateTimeImmutable('2020-06-02');
+
+        $url = 'https://api.exchangeratesapi.io/2020-06-02?base=EUR';
+
+        $response = $this->prophesize(ResponseInterface::class);
+        $response->getContent()->willReturn(json_encode([
+            'rates' => ['USD' => 1.1174],
+            'base' => 'EUR',
+            'date' => '2020-06-03',
+        ]));
+
+        $this->httpClient->request('GET', $url, Argument::any())->willReturn($response->reveal());
+
+        // Assert
+        $this->expectException(ExchangeRateNotFoundException::class);
+
+        // Act
+        $this->SUT->get($baseCurrency, $currency, $date);
+    }
 }
 

@@ -17,14 +17,14 @@ class ApplicationExchangeRateReader implements ExchangeRateReader
     /**
      * @var ExchangeRateReader
      */
-    private $exchangeRateApiClient;
+    private $exchangeRatesApiClient;
 
     public function __construct(
         ExchangeRateReader $exchangeRateStorageReader,
-        ExchangeRateReader $exchangeRateApiClient
+        ExchangeRateReader $exchangeRatesApiClient
     ){
         $this->exchangeRateStorageReader = $exchangeRateStorageReader;
-        $this->exchangeRateApiClient = $exchangeRateApiClient;
+        $this->exchangeRatesApiClient = $exchangeRatesApiClient;
     }
 
     public function get(Currency $baseCurrency, Currency $currency, \DateTimeInterface $date): ExchangeRate
@@ -32,7 +32,7 @@ class ApplicationExchangeRateReader implements ExchangeRateReader
         try {
             return $this->exchangeRateStorageReader->get($baseCurrency, $currency, $date);
         } catch (ExchangeRateNotFoundException $e) {
-            return $this->exchangeRateApiClient->get($baseCurrency, $currency, $date);
+            return $this->exchangeRatesApiClient->get($baseCurrency, $currency, $date);
         }
     }
 }

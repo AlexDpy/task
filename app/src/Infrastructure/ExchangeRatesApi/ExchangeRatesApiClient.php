@@ -34,7 +34,9 @@ class ExchangeRatesApiClient implements ExchangeRateReader
         try {
             $content = json_decode($response->getContent(), true);
 
-            // TODO compare dates resquest<->response and throw ExchangeRateNotFoundException
+            if ($date->format('Y-m-d') !== $content['date']) {
+                throw new ExchangeRateNotFoundException(sprintf('Exchange rate for date %s has not been found on exchangeratesapi.io', $date->format('Y-m-d')));
+            }
 
             // TODO check exists $content[$currency->getSymbol()]
 

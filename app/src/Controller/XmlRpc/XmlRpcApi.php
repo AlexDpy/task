@@ -3,10 +3,20 @@
 namespace App\Controller\XmlRpc;
 
 use App\Domain\Model\Currency;
-use App\Domain\Model\ExchangeRate;
+use App\Domain\Repository\ExchangeRateReader;
 
 class XmlRpcApi
 {
+    /**
+     * @var ExchangeRateReader
+     */
+    private $exchangeRateReader;
+
+    public function __construct(ExchangeRateReader $exchangeRateReader)
+    {
+        $this->exchangeRateReader = $exchangeRateReader;
+    }
+
     /**
      * Get the Exchange Rate from a currency to an other currency on a specific day
      *
@@ -18,11 +28,10 @@ class XmlRpcApi
      */
     public function get($baseCurrency, $currency, $date = null)
     {
-        $exchangeRate = new ExchangeRate(
-            new Currency('EUR'),
-            new Currency('USD'),
-            new \DateTimeImmutable(),
-            1.18
+        $exchangeRate = $this->exchangeRateReader->get(
+            new Currency($baseCurrency),
+            new Currency($currency),
+            new \DateTimeImmutable($date ?? 'now')
         );
 
         return [
